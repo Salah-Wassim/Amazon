@@ -38,8 +38,12 @@ def auth():
 
 
 def error():
-    if login_error:
-        while login_error:
+    # Cas erreur mot de passe
+    login_error = driver.find_element_by_id("auth-error-message-box")
+    signin_url = driver.get("https://www.amazon.fr/ap/signin")
+
+    if login_error or signin_url:
+        while login_error is True:
             # Cibler l'input password
             search_input_password_err = driver.find_element_by_id("ap_password")
             search_value_password_err = input("Input your password : ")
@@ -48,7 +52,7 @@ def error():
             # Cibler le bouton s'identifier
             search_btn_continue_err = driver.find_element_by_class_name("a-button-input")
             search_btn_continue_err.click()
-
+            return login_error is False
 
 
 def search():
@@ -105,19 +109,7 @@ def categories():
         # print(c.text)
 
 
-# Choix de l'utilisateur
-choice_user = input("Do you want signin ? (yes / no) : ")
-if choice_user == "yes":
-    auth()
-    choice_search_user = input("Do you want select a categorie ? (yes / no) : ")
-    if choice_search_user == "yes":
-        categories()
-    elif choice_search_user == "no":
-        search()
-        recover_articles = input("Do you want to retrieve your search results? (yes / no) : ")
-        if recover_articles == "yes":
-            recoverArticle()
-elif choice_user == "no":
+def choice():
     choice_search_user = input("Do you want select a categorie ? (yes / no) : ")
     if choice_search_user == "yes":
         categories()
@@ -127,8 +119,11 @@ elif choice_user == "no":
         if recover_articles == "yes":
             recoverArticle()
 
-# Gestion erreurs mot de passe
-# Cas erreur mot de passe
-login_error = driver.find_element_by_id("auth-error-message-box")
-if login_error:
-    error()
+
+# Choix de l'utilisateur
+choice_user = input("Do you want signin ? (yes / no) : ")
+if choice_user == "yes":
+    auth()
+    choice()
+elif choice_user == "no":
+    choice()
