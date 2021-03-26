@@ -12,8 +12,6 @@ driver.get("https://www.amazon.fr/")
 search_btn_cookies = driver.find_element_by_id("sp-cc-accept")
 search_btn_cookies.click()
 
-choice_user = input("Do you want signin ? (yes / no) : ")
-
 
 def auth():
     # Clibler l'url de la page d'authentification
@@ -38,10 +36,8 @@ def auth():
     search_btn_continue = driver.find_element_by_class_name("a-button-input")
     search_btn_continue.click()
 
-def error():
-    # Cas erreur mot de passe
-    login_error = driver.find_element_by_id("auth-error-message-box")
 
+def error():
     if login_error:
         while login_error:
             # Cibler l'input password
@@ -52,6 +48,7 @@ def error():
             # Cibler le bouton s'identifier
             search_btn_continue_err = driver.find_element_by_class_name("a-button-input")
             search_btn_continue_err.click()
+
 
 
 def search():
@@ -109,6 +106,7 @@ def categories():
 
 
 # Choix de l'utilisateur
+choice_user = input("Do you want signin ? (yes / no) : ")
 if choice_user == "yes":
     auth()
     choice_search_user = input("Do you want select a categorie ? (yes / no) : ")
@@ -129,5 +127,8 @@ elif choice_user == "no":
         if recover_articles == "yes":
             recoverArticle()
 
-# Paramètre Authentification
-if 
+# Gestion erreurs mot de passe
+# Cas erreur mot de passe
+login_error = driver.find_element_by_id("auth-error-message-box")
+if login_error:
+    error()
