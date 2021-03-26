@@ -69,6 +69,8 @@ def search():
     for title in articles_title:
         print(title.text)
 
+
+def categories():
     # Cibler liste déroulante "Toutes nos catégorie"
     search_drop_down = driver.find_element_by_id("searchDropdownBox")
     search_drop_down.click()
@@ -77,5 +79,10 @@ def search():
 # Choix de l'utilisateur
 if choice_user == "yes":
     auth()
-else:
-    search()
+elif choice_user == "no":
+    choice_search_user = input("Do you want select a categorie ? (yes / no)")
+    if choice_search_user == "yes":
+        categories()
+    else:
+        search()
+
