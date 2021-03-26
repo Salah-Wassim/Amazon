@@ -62,6 +62,8 @@ def search():
     search_btn = driver.find_element_by_id("nav-search-submit-button")
     search_btn.click()
 
+
+def recoverArticle():
     # Recupere tous les titres d'articles
     articles_title = driver.find_elements_by_class_name("a-text-normal")
 
@@ -80,9 +82,11 @@ def categories():
 if choice_user == "yes":
     auth()
 elif choice_user == "no":
-    choice_search_user = input("Do you want select a categorie ? (yes / no)")
+    choice_search_user = input("Do you want select a categorie ? (yes / no) : ")
     if choice_search_user == "yes":
         categories()
-    else:
+    elif choice_search_user == "no":
         search()
-
+        recover_articles = input("Do you want to retrieve your search results? (yes / no) : ")
+        if recover_articles == "yes":
+            recoverArticle()
