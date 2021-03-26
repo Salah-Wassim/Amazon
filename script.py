@@ -38,19 +38,20 @@ def auth():
     search_btn_continue = driver.find_element_by_class_name("a-button-input")
     search_btn_continue.click()
 
+def error():
     # Cas erreur mot de passe
     login_error = driver.find_element_by_id("auth-error-message-box")
 
     if login_error:
         while login_error:
             # Cibler l'input password
-            search_input_password = driver.find_element_by_id("ap_password")
-            search_value_password = input("Input your password : ")
-            search_input_password.send_keys(search_value_password)
+            search_input_password_err = driver.find_element_by_id("ap_password")
+            search_value_password_err = input("Input your password : ")
+            search_input_password_err.send_keys(search_value_password_err)
 
             # Cibler le bouton s'identifier
-            search_btn_continue = driver.find_element_by_class_name("a-button-input")
-            search_btn_continue.click()
+            search_btn_continue_err = driver.find_element_by_class_name("a-button-input")
+            search_btn_continue_err.click()
 
 
 def search():
@@ -110,6 +111,14 @@ def categories():
 # Choix de l'utilisateur
 if choice_user == "yes":
     auth()
+    choice_search_user = input("Do you want select a categorie ? (yes / no) : ")
+    if choice_search_user == "yes":
+        categories()
+    elif choice_search_user == "no":
+        search()
+        recover_articles = input("Do you want to retrieve your search results? (yes / no) : ")
+        if recover_articles == "yes":
+            recoverArticle()
 elif choice_user == "no":
     choice_search_user = input("Do you want select a categorie ? (yes / no) : ")
     if choice_search_user == "yes":
@@ -119,3 +128,6 @@ elif choice_user == "no":
         recover_articles = input("Do you want to retrieve your search results? (yes / no) : ")
         if recover_articles == "yes":
             recoverArticle()
+
+# Paramètre Authentification
+if 
