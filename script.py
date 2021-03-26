@@ -32,7 +32,7 @@ def auth():
     # Cibler l'input password
     search_input_password = driver.find_element_by_id("ap_password")
     search_value_password = input("Input your password : ")
-    search_input_password.send_keys(search_value_email)
+    search_input_password.send_keys(search_value_password)
 
     # Cibler le bouton s'identifier
     search_btn_continue = driver.find_element_by_class_name("a-button-input")
@@ -46,7 +46,8 @@ def auth():
             # Cibler l'input password
             search_input_password = driver.find_element_by_id("ap_password")
             search_value_password = input("Input your password : ")
-            search_input_password.send_keys(search_value_email)
+            search_input_password.send_keys(search_value_password)
+
             # Cibler le bouton s'identifier
             search_btn_continue = driver.find_element_by_class_name("a-button-input")
             search_btn_continue.click()
@@ -76,6 +77,34 @@ def categories():
     # Cibler liste déroulante "Toutes nos catégorie"
     search_drop_down = driver.find_element_by_id("searchDropdownBox")
     search_drop_down.click()
+
+    # Cibler les catégories
+    search_categories = driver.find_elements_by_tag_name("option")
+
+    # Creation d'un tableaux
+    categories_array = []
+
+    # Recuperer la liste des categories et les insérer dans un tableaux
+    for c in search_categories:
+        categories_array.append(c.text)
+    print(categories_array)
+
+    # Valider le nom de la catégorie entré par l'utilisateur et faire la recherche
+    for c in categories_array:
+        choice_categorie_user = input("Input a categorie name : ")
+        if choice_categorie_user == categories_array[c.text]:
+            # Cibler la barre de recherche
+            search_bar_categorie = driver.find_element_by_id("twotabsearchtextbox")
+            search_bar_categorie.send_keys(choice_categorie_user)
+
+            # Recuperer le bouton de recherche
+            search_btn_categorie = driver.find_element_by_id("nav-search-submit-button")
+            search_btn_categorie.click()
+        elif choice_categorie_user != categories_array[c.text]:
+            while choice_categorie_user != categories_array[c.text]:
+                print("Input a valid name categorie")
+                return False
+        # print(c.text)
 
 
 # Choix de l'utilisateur
