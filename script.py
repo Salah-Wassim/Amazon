@@ -37,13 +37,13 @@ def auth():
     search_btn_continue.click()
 
 
-def error():
+def error(err):
     # Cas erreur mot de passe
     login_error = driver.find_element_by_id("auth-error-message-box")
     signin_url = driver.get("https://www.amazon.fr/ap/signin")
 
     if login_error or signin_url:
-        while login_error is True:
+        while err and signin_url:
             # Cibler l'input password
             search_input_password_err = driver.find_element_by_id("ap_password")
             search_value_password_err = input("Input your password : ")
@@ -52,7 +52,7 @@ def error():
             # Cibler le bouton s'identifier
             search_btn_continue_err = driver.find_element_by_class_name("a-button-input")
             search_btn_continue_err.click()
-            return login_error is False
+            return (login_error and signin_url) is False
 
 
 def search():
@@ -88,25 +88,20 @@ def categories():
 
     # Recuperer la liste des categories et les insérer dans un tableaux
     for c in search_categories:
-        categories_array.append(c.text)
+        categories_array.append(c.text)  # Convertir WebElements en String
     print(categories_array)
 
     # Valider le nom de la catégorie entré par l'utilisateur et faire la recherche
-    for c in categories_array:
+    i = len(categories_array)
+    err_name_categorie = True
+    while err_name_categorie:
         choice_categorie_user = input("Input a categorie name : ")
-        if choice_categorie_user == categories_array[c.text]:
-            # Cibler la barre de recherche
-            search_bar_categorie = driver.find_element_by_id("twotabsearchtextbox")
-            search_bar_categorie.send_keys(choice_categorie_user)
-
-            # Recuperer le bouton de recherche
-            search_btn_categorie = driver.find_element_by_id("nav-search-submit-button")
-            search_btn_categorie.click()
-        elif choice_categorie_user != categories_array[c.text]:
-            while choice_categorie_user != categories_array[c.text]:
-                print("Input a valid name categorie")
-                return False
-        # print(c.text)
+        if choice_categorie_user == i:
+            search()
+            return err_name_categorie is False
+        elif choice_categorie_user != i:
+            print("Input a valid name categorie")
+        # print()
 
 
 def choice():
