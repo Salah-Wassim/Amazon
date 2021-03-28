@@ -92,14 +92,23 @@ def categories():
     print(categories_array)
 
     # Valider le nom de la catégorie entré par l'utilisateur et faire la recherche
-    i = len(categories_array)
+    # i = len(categories_array)
     err_name_categorie = True
     while err_name_categorie:
         choice_categorie_user = input("Input a categorie name : ")
-        if choice_categorie_user == i:
-            search()
+        if choice_categorie_user in categories_array:
+            # Cibler la barre de recherche
+            search_bar_categorie = driver.find_element_by_id("twotabsearchtextbox")
+            search_bar_categorie.send_keys(choice_categorie_user)
+            # Recuperer le bouton de recherche
+            search_btn = driver.find_element_by_id("nav-search-submit-button")
+            search_btn.click()
+            # Recupere tous les titres d'articles
+            recover_articles = input("Do you want to retrieve your search results? (yes / no) : ")
+            if recover_articles == "yes":
+                recoverArticle()
             return err_name_categorie is False
-        elif choice_categorie_user != i:
+        else:
             print("Input a valid name categorie")
         # print()
 
