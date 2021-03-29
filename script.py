@@ -92,7 +92,6 @@ def categories():
     print(categories_array)
 
     # Valider le nom de la catégorie entré par l'utilisateur et faire la recherche
-    # i = len(categories_array)
     err_name_categorie = True
     while err_name_categorie:
         choice_categorie_user = input("Input a categorie name : ")
@@ -124,10 +123,18 @@ def choice():
             recoverArticle()
 
 
+def basket():
+    choice_basket_user = input("Would you like to access the basket ? (yes / no) : ")
+    if choice_basket_user == "yes":
+        search_basket = driver.find_element_by_id("nav-cart")
+        search_basket.click()
+
+
 # Choix de l'utilisateur
 choice_user = input("Do you want signin ? (yes / no) : ")
 if choice_user == "yes":
     auth()
     choice()
+    basket()
 elif choice_user == "no":
     choice()
